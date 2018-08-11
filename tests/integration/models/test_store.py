@@ -12,13 +12,13 @@ class TestStore(BaseTest):
     def test_crud(self):
         with self.app_context():
             store = StoreModel('test')
-            self.assertIsNone(store.find_by_name('test'),
+            self.assertIsNone(StoreModel.find_by_name('test'),
                               'Test store already exists in the database.')
 
             store.save_to_db()
-            self.assertIsNotNone(store.find_by_name('test'),
+            self.assertIsNotNone(StoreModel.find_by_name('test'),
                                  'Test store is not in the database.')
 
             store.delete_from_db()
-            self.assertIsNone(store.find_by_name('test'),
+            self.assertIsNone(StoreModel.find_by_name('test'),
                               'Test store was not deleted from the database.')
