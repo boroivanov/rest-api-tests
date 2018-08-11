@@ -36,3 +36,33 @@ class TestStore(BaseTest):
                              'Store items should have a length of 1.')
             self.assertEqual(store.items.first().name, 'test_item',
                              'test_item not in test_store items.')
+
+    def test_json(self):
+        with self.app_context():
+            store = StoreModel('test_store')
+            store.save_to_db()
+
+            expected = {
+                'name': 'test_store',
+                'items': []
+            }
+            self.assertDictEqual(store.json(), expected)
+
+    def test_json_with_items(self):
+        with self.app_context():
+            store = StoreModel('test_store')
+            item1 = ItemModel('test_item_1', 123.00, 1)
+            item2 = ItemModel('test_item_2', 11.99, 1)
+
+            store.save_to_db()
+            item1.save_to_db()
+            item2.save_to_db()
+
+            expected = {
+                'name': 'test_store',
+                'items': [
+                    {'name': 'test_item_1', 'price': 123.00},
+                    {'name': 'test_item_2', 'price': 11.99},
+                ]
+            }
+            self.assertDictEqual(store.json(), expected)
