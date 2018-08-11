@@ -1,4 +1,4 @@
-from tests.base_test import BaseTest
+from tests.integration.base_test import BaseTest
 from models.item import ItemModel
 from models.store import StoreModel
 
