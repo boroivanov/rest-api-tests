@@ -1,4 +1,5 @@
 from models.store import StoreModel
+from models.item import ItemModel
 from tests.integration.base_test import BaseTest
 
 
@@ -22,3 +23,16 @@ class TestStore(BaseTest):
             store.delete_from_db()
             self.assertIsNone(StoreModel.find_by_name('test'),
                               'Test store was not deleted from the database.')
+
+    def test_store_relationship(self):
+        with self.app_context():
+            store = StoreModel('test_store')
+            item = ItemModel('test_item', 123.00, 1)
+
+            store.save_to_db()
+            item.save_to_db()
+
+            self.assertEqual(store.items.count(), 1,
+                             'Store items should have a length of 1.')
+            self.assertEqual(store.items.first().name, 'test_item',
+                             'test_item not in test_store items.')
