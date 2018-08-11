@@ -21,3 +21,13 @@ class TestItem(BaseTest):
             self.assertIsNone(ItemModel.find_by_name('test'),
                               f'Found an item with name {item.name}, ' +
                               'but expected not to.')
+
+    def test_store_relationship(self):
+        with self.app_context():
+            store = StoreModel('test_store')
+            item = ItemModel('test_item', 123.00, 1)
+
+            store.save_to_db()
+            item.save_to_db()
+
+            self.assertEqual(item.store.name, 'test_store')
