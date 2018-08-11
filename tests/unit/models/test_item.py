@@ -1,8 +1,8 @@
-from unittest import TestCase
+from tests.unit.base_test import BaseTest
 from models.item import ItemModel
 
 
-class TestItemModel(TestCase):
+class TestItemModel(BaseTest):
     def test_init(self):
         item = ItemModel('test', 123.00, 1)
         self.assertEqual(item.name, 'test')
