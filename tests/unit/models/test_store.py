@@ -7,4 +7,4 @@ class TestStoreModel(BaseTest):
         store = StoreModel('test')
         self.assertEqual(store.name, 'test',
                          'The name of the store does not equal ' +
-                         'the constuctor argument')
+                         'the constructor argument')
