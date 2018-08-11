@@ -8,3 +8,17 @@ class TestStore(BaseTest):
         self.assertListEqual(store.items.all(), [],
                              'Store items length should be 0 ' +
                              'at store creation.')
+
+    def test_crud(self):
+        with self.app_context():
+            store = StoreModel('test')
+            self.assertIsNone(store.find_by_name('test'),
+                              'Test store already exists in the database.')
+
+            store.save_to_db()
+            self.assertIsNotNone(store.find_by_name('test'),
+                                 'Test store is not in the database.')
+
+            store.delete_from_db()
+            self.assertIsNone(store.find_by_name('test'),
+                              'Test store was not deleted from the database.')
