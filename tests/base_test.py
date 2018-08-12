@@ -15,12 +15,18 @@ class BaseTest(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        """Runs once for every test case.
+
+        """
         app.config['SQLALCHEMY_DATABASE_URI'] = BaseTest.DATABASE_URI
         app.config['DEBUG'] = False
         with app.app_context():
             db.init_app(app)
 
     def setUp(self):
+        """Runs once for every test method.
+
+        """
         with app.app_context():
             db.create_all()
         self.app = app.test_client
