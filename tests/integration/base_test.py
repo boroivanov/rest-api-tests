@@ -11,18 +11,22 @@ from db import db
 
 
 class BaseTest(TestCase):
-    def setUp(self):
-        # make sure the db exists
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'
+    DATABASE_URI = "sqlite://"
+
+    @classmethod
+    def setUpClass(cls):
+        app.config['SQLALCHEMY_DATABASE_URI'] = BaseTest.DATABASE_URI
+        app.config['DEBUG'] = False
         with app.app_context():
             db.init_app(app)
+
+    def setUp(self):
+        with app.app_context():
             db.create_all()
-        # create the app client
-        self.app = app.test_client()
+        self.app = app.test_client
         self.app_context = app.app_context
 
     def tearDown(self):
-        # blank the db
         with app.app_context():
             db.session.remove()
             db.drop_all()
