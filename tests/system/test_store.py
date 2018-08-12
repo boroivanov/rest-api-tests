@@ -27,8 +27,18 @@ class StoreTest(BaseTest):
                 ItemModel('test', 2.99, 1).save_to_db()
                 r = c.get('/store/test')
 
+                expected = {
+                    'name': 'test',
+                    'items':
+                    [
+                        {
+                            'name': 'test',
+                            'price': 2.99
+                        }
+                    ]
+                }
                 self.assertEqual(r.status_code, 200)
-                self.assertDictEqual(d1={'name': 'test', 'items': [{'name': 'test', 'price': 2.99}]},
+                self.assertDictEqual(d1=expected,
                                      d2=json.loads(r.data))
 
     def test_delete_store(self):
@@ -65,7 +75,16 @@ class StoreTest(BaseTest):
                 StoreModel('test').save_to_db()
                 r = c.get('/stores')
 
-                self.assertDictEqual(d1={'stores': [{'name': 'test', 'items': []}]},
+                expected = {
+                    'stores':
+                    [
+                        {
+                            'name': 'test',
+                            'items': []
+                        }
+                    ]
+                }
+                self.assertDictEqual(d1=expected,
                                      d2=json.loads(r.data))
 
     def test_store_with_items_list(self):
@@ -75,5 +94,20 @@ class StoreTest(BaseTest):
                 ItemModel('test', 17.99, 1).save_to_db()
                 r = c.get('/stores')
 
-                self.assertDictEqual(d1={'stores': [{'name': 'test', 'items': [{'name': 'test', 'price': 17.99}]}]},
+                expected = {
+                    'stores':
+                    [
+                        {
+                            'name': 'test',
+                                    'items':
+                                    [
+                                        {
+                                            'name': 'test',
+                                            'price': 17.99
+                                        }
+                                    ]
+                        }
+                    ]
+                }
+                self.assertDictEqual(d1=expected,
                                      d2=json.loads(r.data))
