@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "3866caba-cf4c-476d-83b0-edc219393e7f",
+		"name": "rest-api-tests",
+		"description": "# automated-software-testing-with-python - rest api tests section 4 to 8\n\nUdemy class https://www.udemy.com/automated-software-testing-with-python/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7402e7d-c7c9-4b6d-91dd-3baa9d35a753",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';",
+							"});",
+							"",
+							"pm.test(\"User created successfully\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"User created successfully.\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"peter\",\n\t\"password\": \"test123\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2202994a-3446-4ea4-8f57-41c2ef359bc2",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';",
+							"});",
+							"",
+							"",
+							"pm.test(\"Set access_token variable\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"access_token\");",
+							"    var jsonData = pm.response.json();",
+							"    pm.environment.set(\"access_token\", jsonData.access_token);",
+							"});",
+							"",
+							"// pm.test(\"Set access_token variable\", function () {",
+							"//     var jsonData = pm.response.json();",
+							"//     pm.environment.set(\"access_token\", jsonData.access_token);",
+							"// });"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"peter\",\n\t\"password\": \"test123\"\n}"
+				},
+				"url": {
+					"raw": "{{url}}/auth",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/item/<name>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0bc861c-3b32-4a4a-8799-2a6f5078661f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT {{access_token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}/item/my_item",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"item",
+						"my_item"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/item/<name>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9a2557ec-499e-4c6a-a29f-faf0f0fc296f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Content-Type is application/json\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';",
+							"});",
+							"",
+							"pm.test(\"Item name set\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"my_item\");",
+							"});",
+							"",
+							"pm.test(\"Item price set\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.price).to.eql(123.00);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"price\": 123.00,\n\t\"store_id\": 1\n}"
+				},
+				"url": {
+					"raw": "{{url}}/item/my_item",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"item",
+						"my_item"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "276ca7c4-f93e-41f4-9ea3-87fe0c1bbdad",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3a1ff081-8ead-449d-b5d6-dfc13ba0c3e4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
