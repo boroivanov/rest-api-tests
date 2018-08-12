@@ -1,5 +1,5 @@
 from models.user import UserModel
-from tests.base_test import BaseTest
+from tests.unit.base_test import BaseTest
 
 
 class UserTest(BaseTest):
@@ -7,6 +7,8 @@ class UserTest(BaseTest):
         user = UserModel('test', 'abcd')
 
         self.assertEqual(user.username, 'test',
-                         "The name of the user after creation does not equal the constructor argument.")
+                         'The name of the user after creation does not ' +
+                         'equal the constructor argument.')
         self.assertEqual(user.password, 'abcd',
-                         "The password of the user after creation does not equal the constructor argument.")
+                         'The password of the user after creation does not ' +
+                         'equal the constructor argument.')
