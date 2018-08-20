@@ -15,7 +15,8 @@ class ItemTest(BaseTest):
                     'username': 'test',
                     'password': '1234'
                 }), headers={'Content-Type': 'application/json'})
-                self.auth_header = "JWT {}".format(json.loads(auth_request.data)['access_token'])
+                self.auth_header = "JWT {}".format(
+                    json.loads(auth_request.data)['access_token'])
 
     def test_item_no_auth(self):
         with self.app() as c:
@@ -24,7 +25,8 @@ class ItemTest(BaseTest):
 
     def test_item_not_found(self):
         with self.app() as c:
-            r = c.get('/item/test', headers={'Authorization': self.auth_header})
+            r = c.get('/item/test',
+                      headers={'Authorization': self.auth_header})
             self.assertEqual(r.status_code, 404)
 
     def test_item_found(self):
@@ -32,7 +34,8 @@ class ItemTest(BaseTest):
             with self.app_context():
                 StoreModel('test').save_to_db()
                 ItemModel('test', 17.99, 1).save_to_db()
-                r = c.get('/item/test', headers={'Authorization': self.auth_header})
+                r = c.get('/item/test',
+                          headers={'Authorization': self.auth_header})
 
                 self.assertEqual(r.status_code, 200)
                 self.assertDictEqual(d1={'name': 'test', 'price': 17.99},

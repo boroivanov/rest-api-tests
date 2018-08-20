@@ -43,6 +43,7 @@ class TestStore(BaseTest):
             store.save_to_db()
 
             expected = {
+                'id': 1,
                 'name': 'test_store',
                 'items': []
             }
@@ -59,6 +60,7 @@ class TestStore(BaseTest):
             item2.save_to_db()
 
             expected = {
+                'id': 1,
                 'name': 'test_store',
                 'items': [
                     {'name': 'test_item_1', 'price': 123.00},
